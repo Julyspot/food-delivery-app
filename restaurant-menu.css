@@ -1,0 +1,247 @@
+html {
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* We separated the background properties */
+    background-image: url('vegcurries.png');
+    /* This is now the default/fallback */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    color: black;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 3px 4px 5px orangered;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Light background color */
+}
+
+h1 {
+    text-align: center;
+    color: green;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li#menu-item {
+    padding: 10px 0;
+    border-bottom: 1px solid aquamarine;
+
+    /* Use CSS Grid */
+    display: grid;
+
+    /* Define 3 columns:
+       1. Item Name: 3 parts (flexible)
+       2. Quantity: 1.5 parts (flexible)
+       3. Price: 1 part (flexible)
+    */
+    grid-template-columns: 3fr 1.5fr 1fr;
+
+    /* Vertically center all items in the row */
+    align-items: center;
+
+    /* Add a 10px gap between columns */
+    gap: 10px;
+}
+
+/* This is the new part */
+li#menu-item span:first-child {
+    font-weight: bold;
+}
+
+.quantity-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-input {
+    width: 40px;
+    padding: 5px;
+    text-align: center;
+}
+
+.quantity-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 3px 5px;
+    /* Smaller padding */
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 3px;
+    /* Rounded corners */
+    font-size: 14px;
+    /* Smaller font size */
+}
+
+.quantity-button:hover {
+    background-color: #0056b3;
+}
+
+.cart-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Light background color */
+    box-shadow: 3px 4px 5px orangered;
+}
+
+/* --- New Cart Table Styles --- */
+/* Add this to the bottom of your file */
+
+#cart-items {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.cart-header,
+.cart-row {
+    display: grid;
+    /* This creates 3 columns:
+       1st column (Name) takes up 2 parts of the space
+       2nd column (Qty) takes up 1 part
+       3rd column (Price) takes up 1 part
+    */
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 10px;
+    /* Space between columns */
+    padding: 5px 0;
+}
+
+.cart-header {
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+}
+
+/* This makes the text in the 2nd and 3rd columns line up to the right */
+.cart-header div:nth-child(2),
+.cart-header div:nth-child(3),
+.cart-row div:nth-child(2),
+.cart-row div:nth-child(3) {
+    text-align: right;
+}
+
+/* Add this to the bottom of restaurant-menu.css */
+
+.quantity-buttons {
+    /* This centers the buttons in their column */
+    justify-content: center;
+}
+
+.fixed-cost {
+    /* This aligns the price to the right */
+    text-align: right;
+    font-weight: bold;
+}
+
+/* --- New Filter Button Styles --- */
+/* Add this to the bottom of your file */
+
+.filter-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    background-color: #f9f9f9;
+    color: #555;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* --- New Hover and Active Button Styles --- */
+
+/* "Show All" Button */
+#filter-all:hover {
+    background-color: #eee;
+    border-color: #aaa;
+}
+
+#filter-all.active {
+    background-color: #888;
+    /* A neutral gray for "All" */
+    color: white;
+    border-color: #888;
+}
+
+/* "Veg" Button */
+#filter-veg:hover {
+    background-color: #e0f2e9;
+    /* light green */
+    border-color: #5cb85c;
+    color: #3d7c3d;
+}
+
+#filter-veg.active {
+    background-color: #5cb85c;
+    /* solid green */
+    color: white;
+    border-color: #5cb85c;
+}
+
+/* "Non-Veg" Button */
+#filter-non-veg:hover {
+    background-color: #f9e4e4;
+    /* light red */
+    border-color: #d9534f;
+    color: #a94442;
+}
+
+#filter-non-veg.active {
+    background-color: #d9534f;
+    /* solid red */
+    color: white;
+    border-color: #d9534f;
+}
+
+/* --- Checkout Button Style --- */
+#checkout-btn {
+    display: block;
+    /* Makes it a full-width block */
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    /* Space above the button */
+
+    background-color: #5cb85c;
+    /* A nice "go" green */
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* Ensures padding doesn't break width */
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#checkout-btn:hover {
+    background-color: #4cae4c;
+    /* Darker green on hover */
+}

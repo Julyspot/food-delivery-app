@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>food order</title>
+    <link rel="stylesheet" href="foodpage.css">
+    <link rel="stylesheet" href="nav.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+</head>
+
+<body>
+    <nav id="navigation">
+        <ul id="main-nav">
+            <li class="item"><a href="foodpage.html"><strong>Home</strong></a></li>
+            <li class="item"><a href="Menu.html"><strong>Menu</strong></a></li>
+            <li class="item"><a href="About.html"><strong>About</strong></a></li>
+            <li class="item"><a href="Support.html"><strong>Support</strong></a></li>
+            <!-- <li class="item"><a href="login.html"><strong>Login/Signup</strong></a></li> -->
+        </ul>
+
+        <ul id="user-nav">
+        </ul>
+    </nav>
+    <div id="map-container">
+        <div id="close-map-btn">X</div>
+        <div id="map"></div>
+    </div>
+
+    <section id="first">
+        <h1 class="primary">welcome to OnlineFoodDelivery</h1>
+        <p>Your favorite local restaurants are just a click away. Get hot, delicious food delivered straight to your
+            door.
+        </p>
+        <p>Fast, easy, and delicious. Find your craving and order in seconds</p>
+        <div>
+            <button class="btn"><a href="Menu.html"><em><strong></strong>Order Now</em></a></button>
+            <button class="btn" id="find-nearby-btn"><em><strong></strong>Find Near Me</em></button>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Get the navigation bar for user links
+            const userNav = document.getElementById('user-nav');
+
+            // 2. Check if a 'currentUser' is saved in localStorage
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (currentUser) {
+                // 3. IF USER IS LOGGED IN:
+                // Show their name and a "Logout" button
+                userNav.innerHTML = `
+                    <li class="item"><strong>Welcome, ${currentUser.firstName}!</strong></li>
+                    <li class="item"><a href="#" id="logout-btn"><strong>Logout</strong></a></li>
+                `;
+
+                // 4. Add functionality to the new "Logout" button
+                const logoutBtn = document.getElementById('logout-btn');
+                logoutBtn.addEventListener('click', () => {
+                    // Remove the user's session
+                    localStorage.removeItem('currentUser');
+                    alert('You have been logged out.');
+                    // Reload the page to show the "Login" links
+                    window.location.reload();
+                });
+
+            } else {
+                // 5. IF USER IS LOGGED OUT:
+                // Show "Login" and "Sign Up" buttons
+                userNav.innerHTML = `
+                    <li class="item"><a href="login.html"><strong>Login</strong></a></li>
+                    <li class="item"><a href="signup.html" class="signup-btn"><strong>Sign Up</strong></a></li>
+                `;
+            }
+        });
+        // ... (your existing nav bar logic) ...
+        //     }
+        // });
+
+        // --- NEW MAP LOGIC ---
+
+        // 1. Get the new button and the map container
+        const findNearbyBtn = document.getElementById('find-nearby-btn');
+        const mapContainer = document.getElementById('map-container');
+        const closeMapBtn = document.getElementById('close-map-btn');
+        let map; // This will hold our map object
+
+        // 2. Add click listener to the button
+        findNearbyBtn.addEventListener('click', () => {
+            // 3. Ask for the user's location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showMap, handleLocationError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+            // 3. Add click listener to the CLOSE button
+            closeMapBtn.addEventListener('click', () => {
+                mapContainer.style.display = 'none'; // Hide the map
+            });
+        });
+
+        function showMap(position) {
+            // 4. We have the location! Show the map container.
+            mapContainer.style.display = 'block';
+
+            const userLat = position.coords.latitude;
+            const userLng = position.coords.longitude;
+
+            // 5. Initialize the map (if it's not already)
+            // We use 'map ||' to prevent re-initializing the map
+            map = map || L.map('map').setView([userLat, userLng], 13);
+
+            // 6. Add the map tiles (the actual map image)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // 7. Add a marker for the user
+            L.marker([userLat, userLng]).addTo(map)
+                .bindPopup("Your Location")
+                .openPopup();
+
+            // 8. Fetch our restaurants and add markers for them
+            fetch('restaurants.json')
+                .then(response => response.json())
+                .then(restaurants => {
+                    restaurants.forEach(restaurant => {
+                        const { name, latitude, longitude, id } = restaurant;
+
+                        L.marker([latitude, longitude]).addTo(map)
+                            .bindPopup(`<b>${name}</b><br><a href="restaurant-menu.html?id=${id}">View Menu</a>`);
+                    });
+                });
+        }
+
+        function handleLocationError(error) {
+            alert("Could not get your location. Error: " + error.message);
+        }
+
+    </script>
+</body>
+
+</html>
+</script>
+</body>
+
+</html>

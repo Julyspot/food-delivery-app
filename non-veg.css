@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('non-veg.jpg') no-repeat center center fixed;
+    background-size: cover; /* Ensure the background covers the entire viewport */
+    color: black;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 3px 4px 5px orangered;
+    background-color: rgba(255, 255, 255, 0.8); /* Light background color */
+}
+
+h1 {
+    text-align: center;
+    color: green;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li#menu-item {
+    padding: 10px 0;
+    border-bottom: 1px solid aquamarine;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quantity-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-input {
+    width: 40px;
+    padding: 5px;
+    text-align: center;
+}
+
+.quantity-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 3px 5px; /* Smaller padding */
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 3px; /* Rounded corners */
+    font-size: 14px; /* Smaller font size */
+}
+
+.quantity-button:hover {
+    background-color: #0056b3;
+}
+
+.cart-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8); /* Light background color */
+    box-shadow: 3px 4px 5px orangered;
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="checkout.css">
+    <link rel="stylesheet" href="nav.css">
+</head>
+
+<body>
+
+    <nav id="navigation">
+        <ul id="main-nav">
+            <li class="item"><a href="foodpage.html"><strong>Home</strong></a></li>
+            <li class="item"><a href="Menu.html"><strong>Menu</strong></a></li>
+            <li class="item"><a href="About.html"><strong>About</strong></a></li>
+            <li class="item"><a href="Support.html"><strong>Support</strong></a></li>
+        </ul>
+        <ul id="user-nav">
+        </ul>
+    </nav>
+
+    <div class="checkout-container">
+
+        <div class="order-summary">
+            <h1>Order Summary</h1>
+            <div id="summary-items-list">
+            </div>
+            <div id="summary-total">
+                Total: <span>Loading...</span>
+            </div>
+        </div>
+
+        <div class="payment-form">
+            <h1>Delivery & Payment</h1>
+            <form id="checkout-form">
+                <div class="input-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="address">Delivery Address</label>
+                    <input type="text" id="address" required>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="cc-number">Card Number</label>
+                        <input type="text" id="cc-number" placeholder="0000 0000 0000 0000" required>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="expiry">Expiry</label>
+                        <input type="text" id="expiry" placeholder="MM / YY" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="place-order-btn">Place Order</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. NAVBAR SCRIPT (Copied from other pages) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const userNav = document.getElementById('user-nav');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (currentUser) {
+                // <li class="item"><strong>Welcome, ${currentUser.firstName}!</strong></li>
+                userNav.innerHTML = `
+                    <li class="item"><a href="#" id="logout-btn"><strong>Logout</strong></a></li>
+                `;
+
+                const logoutBtn = document.getElementById('logout-btn');
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('currentUser');
+                    // Also clear their cart when they log out
+                    const cartKey = 'cart_' + currentUser.email;
+                    localStorage.removeItem(cartKey);
+                    alert('You have been logged out.');
+                    window.location.href = 'foodpage.html';
+                });
+
+            } else {
+                // NOT LOGGED IN - Kick them back to the login page
+                alert('You must be logged in to check out.');
+                window.location.href = 'login.html';
+
+                // You can skip loading the rest of the page
+                return;
+            }
+
+            // --- 2. CHECKOUT PAGE SCRIPT ---
+
+            // Get the cart for the logged-in user
+            const cartKey = 'cart_' + currentUser.email;
+            const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+            const itemsListDiv = document.getElementById('summary-items-list');
+            const totalDiv = document.getElementById('summary-total');
+            let totalAmount = 0;
+
+            if (cart.length === 0) {
+                itemsListDiv.innerHTML = '<p>Your cart is empty.</p>';
+                totalDiv.innerHTML = 'Total: <span>Rs 0/-</span>';
+                // Disable the order button if cart is empty
+                document.getElementById('place-order-btn').disabled = true;
+                document.getElementById('place-order-btn').style.backgroundColor = '#aaa';
+            } else {
+                // Loop through cart and display items
+                cart.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'summary-item';
+
+                    const itemTotal = item.price * item.quantity;
+                    totalAmount += itemTotal;
+
+                    itemDiv.innerHTML = `
+                        <span class="item-name">${item.name} (x${item.quantity})</span>
+                        <span class="item-total">Rs ${itemTotal}</span>
+                    `;
+                    itemsListDiv.appendChild(itemDiv);
+                });
+
+                // Display final total
+                totalDiv.innerHTML = `Total: <span>Rs ${totalAmount}/-</span>`;
+            }
+
+            // 3. "PLACE ORDER" SCRIPT
+            const checkoutForm = document.getElementById('checkout-form');
+            checkoutForm.addEventListener('submit', (event) => {
+                // Stop the form from refreshing the page
+                event.preventDefault();
+
+                // Simulate a successful order
+                alert('Order Placed Successfully!\nThank you for your purchase.');
+
+                // Clear the user's cart
+                localStorage.removeItem(cartKey);
+
+                // Send them back to the home page
+                window.location.href = 'foodpage.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

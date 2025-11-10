@@ -1,0 +1,265 @@
+[
+  {
+    "id": 1,
+    "name": "Pizza Palace",
+    "cuisine": "Italian",
+    "image": "pizza-palace.jpg",
+    "menuBackground": "pizza_AI.png",
+    "latitude": 17.4375,
+    "longitude": 78.4482,
+    "menu": [
+      { "id": 101, "item": "Margherita Pizza", "type": "veg", "price": 250 },
+      { "id": 102, "item": "Pepperoni Pizza", "type": "non-veg", "price": 300 },
+      {
+        "id": 103,
+        "item": "Veggie Delight Pizza",
+        "type": "veg",
+        "price": 270
+      },
+      { "id": 104, "item": "Farmhouse Pizza", "type": "veg", "price": 290 },
+      {
+        "id": 105,
+        "item": "Chicken Supreme Pizza",
+        "type": "non-veg",
+        "price": 350
+      },
+      { "id": 106, "item": "Paneer Tikka Pizza", "type": "veg", "price": 310 },
+      {
+        "id": 107,
+        "item": "Spicy Chicken Pizza",
+        "type": "non-veg",
+        "price": 340
+      },
+      {
+        "id": 108,
+        "item": "Mushroom & Olive Pizza",
+        "type": "veg",
+        "price": 280
+      },
+      {
+        "id": 109,
+        "item": "Pasta Arrabiata (Red)",
+        "type": "veg",
+        "price": 240
+      },
+      {
+        "id": 110,
+        "item": "Pasta Alfredo (White)",
+        "type": "veg",
+        "price": 260
+      },
+      {
+        "id": 111,
+        "item": "Chicken Alfredo Pasta",
+        "type": "non-veg",
+        "price": 320
+      },
+      { "id": 112, "item": "Garlic Bread", "type": "veg", "price": 150 },
+      {
+        "id": 113,
+        "item": "Garlic Bread with Cheese",
+        "type": "veg",
+        "price": 180
+      },
+      { "id": 114, "item": "Caesar Salad", "type": "veg", "price": 200 },
+      {
+        "id": 115,
+        "item": "Chicken Caesar Salad",
+        "type": "non-veg",
+        "price": 250
+      },
+      { "id": 116, "item": "Veg Calzone", "type": "veg", "price": 230 },
+      { "id": 117, "item": "Chicken Calzone", "type": "non-veg", "price": 270 },
+      { "id": 118, "item": "Choco Lava Cake", "type": "veg", "price": 100 },
+      { "id": 119, "item": "Tiramisu", "type": "veg", "price": 160 }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Curry Corner",
+    "cuisine": "Indian",
+    "image": "curry-corner.jpg",
+    "menuBackground": "vegcurries.png",
+    "latitude": 17.4425,
+    "longitude": 78.442,
+    "menu": [
+      { "id": 201, "item": "Butter Naan", "type": "veg", "price": 60 },
+      { "id": 202, "item": "Tandoori Roti", "type": "veg", "price": 45 },
+      { "id": 203, "item": "Garlic Naan", "type": "veg", "price": 70 },
+      { "id": 204, "item": "Rumali Roti", "type": "veg", "price": 50 },
+      { "id": 205, "item": "Laccha Paratha", "type": "veg", "price": 65 },
+      { "id": 206, "item": "French Fries", "type": "veg", "price": 150 },
+      { "id": 207, "item": "Veg Manchurian", "type": "veg", "price": 220 },
+      { "id": 208, "item": "Chilli Paneer", "type": "veg", "price": 260 },
+      { "id": 209, "item": "Chicken 65", "type": "non-veg", "price": 290 },
+      { "id": 210, "item": "Chilli Chicken", "type": "non-veg", "price": 300 },
+      {
+        "id": 211,
+        "item": "Paneer Butter Masala",
+        "type": "veg",
+        "price": 280
+      },
+      { "id": 212, "item": "Dal Makhani", "type": "veg", "price": 240 },
+      { "id": 213, "item": "Aloo Gobi", "type": "veg", "price": 210 },
+      { "id": 214, "item": "Veg Korma", "type": "veg", "price": 250 },
+      { "id": 215, "item": "Chana Masala", "type": "veg", "price": 220 },
+      { "id": 216, "item": "Palak Paneer", "type": "veg", "price": 270 },
+      { "id": 217, "item": "Malai Kofta", "type": "veg", "price": 290 },
+      { "id": 218, "item": "Bhindi Masala", "type": "veg", "price": 200 },
+      { "id": 219, "item": "Baingan Bharta", "type": "veg", "price": 210 },
+      { "id": 220, "item": "Mushroom Masala", "type": "veg", "price": 260 },
+      { "id": 221, "item": "Dal Tadka", "type": "veg", "price": 200 },
+      { "id": 222, "item": "Navratan Korma", "type": "veg", "price": 300 },
+      { "id": 223, "item": "Kadhai Paneer", "type": "veg", "price": 280 },
+      { "id": 224, "item": "Rajma Masala", "type": "veg", "price": 230 },
+      { "id": 225, "item": "Dum Aloo", "type": "veg", "price": 240 },
+      { "id": 226, "item": "Paneer Tikka Masala", "type": "veg", "price": 300 },
+      { "id": 227, "item": "Mix Veg Curry", "type": "veg", "price": 220 },
+      { "id": 228, "item": "Shahi Paneer", "type": "veg", "price": 290 },
+      { "id": 229, "item": "Butter Chicken", "type": "non-veg", "price": 350 },
+      {
+        "id": 230,
+        "item": "Chicken Tikka Masala",
+        "type": "non-veg",
+        "price": 360
+      },
+      { "id": 231, "item": "Mutton Korma", "type": "non-veg", "price": 400 },
+      { "id": 232, "item": "Fish Curry", "type": "non-veg", "price": 340 },
+      { "id": 233, "item": "Chicken Biryani", "type": "non-veg", "price": 320 },
+      { "id": 234, "item": "Mutton Biryani", "type": "non-veg", "price": 420 },
+      {
+        "id": 235,
+        "item": "Goan Prawn Curry",
+        "type": "non-veg",
+        "price": 380
+      },
+      { "id": 236, "item": "Kadhai Chicken", "type": "non-veg", "price": 340 },
+      {
+        "id": 237,
+        "item": "Rogan Josh (Mutton)",
+        "type": "non-veg",
+        "price": 410
+      },
+      { "id": 238, "item": "Egg Curry", "type": "non-veg", "price": 250 },
+      {
+        "id": 239,
+        "item": "Chicken Chettinad",
+        "type": "non-veg",
+        "price": 360
+      },
+      { "id": 240, "item": "Chicken Korma", "type": "non-veg", "price": 350 },
+      {
+        "id": 241,
+        "item": "Andhra Chicken Curry",
+        "type": "non-veg",
+        "price": 340
+      },
+      {
+        "id": 242,
+        "item": "Hyderabadi Chicken Korma",
+        "type": "non-veg",
+        "price": 350
+      },
+      { "id": 243, "item": "Mughlai Chicken", "type": "non-veg", "price": 370 },
+      {
+        "id": 244,
+        "item": "Chicken Vindaloo",
+        "type": "non-veg",
+        "price": 360
+      },
+      { "id": 245, "item": "Boiled Egg Fry", "type": "non-veg", "price": 200 }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Milkshake Factory",
+    "cuisine": "Beverages & Desserts",
+    "image": "milkshake-factory.jpg",
+    "menuBackground": "Milk-shake_AI.png",
+    "latitude": 17.439,
+    "longitude": 78.445,
+    "menu": [
+      {
+        "id": 301,
+        "item": "Classic Vanilla Shake",
+        "type": "veg",
+        "price": 180
+      },
+      {
+        "id": 302,
+        "item": "Rich Chocolate Shake",
+        "type": "veg",
+        "price": 200
+      },
+      { "id": 303, "item": "Strawberry Shake", "type": "veg", "price": 190 },
+      { "id": 304, "item": "Oreo Cookie Shake", "type": "veg", "price": 220 },
+      { "id": 305, "item": "KitKat Shake", "type": "veg", "price": 230 },
+      {
+        "id": 306,
+        "item": "Mango Shake (Seasonal)",
+        "type": "veg",
+        "price": 210
+      },
+      { "id": 307, "item": "Butterscotch Shake", "type": "veg", "price": 200 },
+      { "id": 308, "item": "Cold Coffee Shake", "type": "veg", "price": 190 },
+      { "id": 309, "item": "Brownie Fudge Shake", "type": "veg", "price": 240 },
+      { "id": 310, "item": "Red Velvet Shake", "type": "veg", "price": 250 }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Ice-Cream Parlour",
+    "cuisine": "Ice Creams & Desserts",
+    "image": "ice-cream-parlour.jpg",
+    "menuBackground": "ice-cream_AI.png",
+    "latitude": 17.441,
+    "longitude": 78.45,
+    "menu": [
+      {
+        "id": 401,
+        "item": "Vanilla (Single Scoop)",
+        "type": "veg",
+        "price": 80
+      },
+      {
+        "id": 402,
+        "item": "Chocolate (Single Scoop)",
+        "type": "veg",
+        "price": 90
+      },
+      {
+        "id": 403,
+        "item": "Strawberry (Single Scoop)",
+        "type": "veg",
+        "price": 90
+      },
+      {
+        "id": 404,
+        "item": "Butterscotch (Single Scoop)",
+        "type": "veg",
+        "price": 95
+      },
+      { "id": 405, "item": "Hot Fudge Sundae", "type": "veg", "price": 180 },
+      { "id": 406, "item": "Banana Split", "type": "veg", "price": 220 },
+      { "id": 407, "item": "Pista Kulfi", "type": "veg", "price": 100 },
+      {
+        "id": 408,
+        "item": "Sizzling Brownie with Ice Cream",
+        "type": "veg",
+        "price": 240
+      },
+      {
+        "id": 409,
+        "item": "Fruit Salad with Ice Cream",
+        "type": "veg",
+        "price": 170
+      },
+      {
+        "id": 410,
+        "item": "Belgian Waffle with Ice Cream",
+        "type": "veg",
+        "price": 230
+      }
+    ]
+  }
+]

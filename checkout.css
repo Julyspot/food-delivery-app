@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('payment.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+nav#navigation {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    /* This pushes the two lists apart */
+    align-items: center;
+    padding: 20px 40px;
+    /* Added some horizontal padding */
+    width: 100%;
+    box-sizing: border-box;
+    /* Ensures padding doesn't break layout */
+}
+
+nav#navigation ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    margin-right: 20px;
+}
+
+ul li a {
+    padding: 12px 12px;
+    text-decoration: none;
+    color: blanchedalmond;
+
+}
+
+ul li a:hover {
+    background-color: beige;
+    /* Change background color on hover to yellow */
+    color: red;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    /* Reduced duration for demonstration purposes */
+    transition: all 0.7s ease-out;
+    transform: rotate(360deg);
+    box-shadow: 7px 6px 8px orange;
+}
+
+/* This wrapper holds everything */
+.checkout-container {
+    display: flex;
+    /* Creates a two-column layout */
+    flex-wrap: wrap;
+    /* Allows columns to stack on small screens */
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    /* Keeps the rounded corners */
+}
+
+/* Column 1: Order Summary */
+.order-summary {
+    flex: 1;
+    /* Takes up 1 part of the space */
+    padding: 2rem 3rem;
+    border-right: 1px solid #eee;
+    min-width: 300px;
+}
+
+/* Column 2: Payment Form */
+.payment-form {
+    flex: 2;
+    /* Takes up 2 parts of the space */
+    padding: 2rem 3rem;
+    min-width: 300px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 1rem;
+}
+
+/* --- Order Summary Styles --- */
+#summary-items-list {
+    margin-bottom: 1.5rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.summary-item .item-name {
+    font-weight: bold;
+    color: #555;
+}
+
+.summary-item .item-total {
+    color: #333;
+}
+
+#summary-total {
+    text-align: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 1.5rem;
+}
+
+#summary-total span {
+    color: #d9534f;
+}
+
+/* --- Payment Form Styles --- */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.input-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.input-row .input-group {
+    width: 100%;
+}
+
+/* The "Place Order" button */
+#place-order-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #d9534f;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+#place-order-btn:hover {
+    background-color: #c9302c;
+}

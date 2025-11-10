@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegetarian Menu</title>
+    <link rel="stylesheet" href="veg.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Vegetarian Menu</h1>
+
+        <ul>
+            <li id="menu-item">
+                <span>Panner curry</span>
+                <div class="quantity-buttons">
+                    <button class="quantity-button decrease">-</button>
+                    <input type="number" value="0" min="0" class="quantity-input">
+                    <button class="quantity-button increase">+</button>
+                </div>
+                <span class="fixed-cost">Rs 210/-</span>
+            </li>
+            <li id="menu-item">
+                <span>vegetable curry</span>
+                <div class="quantity-buttons">
+                    <button class="quantity-button decrease">-</button>
+                    <input type="number" value="0" min="0" class="quantity-input">
+                    <button class="quantity-button increase">+</button>
+                </div>
+                <span class="fixed-cost">Rs 220/-</span>
+            </li>
+            <li id="menu-item">
+                <span>veg biryani</span>
+                <div class="quantity-buttons">
+                    <button class="quantity-button decrease">-</button>
+                    <input type="number" value="0" min="0" class="quantity-input">
+                    <button class="quantity-button increase">+</button>
+                </div>
+                <span class="fixed-cost">Rs 240/-</span>
+            </li>
+            <li id="menu-item">
+                <span>fried rice</span>
+                <div class="quantity-buttons">
+                    <button class="quantity-button decrease">-</button>
+                    <input type="number" value="0" min="0" class="quantity-input">
+                    <button class="quantity-button increase">+</button>
+                </div>
+                <span class="fixed-cost">Rs 200/-</span>
+            </li>
+            <li id="menu-item">
+                <span>manchuria</span>
+                <div class="quantity-buttons">
+                    <button class="quantity-button decrease">-</button>
+                    <input type="number" value="0" min="0" class="quantity-input">
+                    <button class="quantity-button increase">+</button>
+                </div>
+                <span class="fixed-cost">Rs 180/-</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="cart-container">
+        <h2>Cart</h2>
+        <div id="cart-items"></div>
+        <div id="cart-summary">Total items: <span id="total-items">0</span>, Total amount: Rs <span
+                id="total-amount">0</span>/-</div>
+    </div>
+
+
+    <script>
+        // Get all quantity inputs and buttons for increasing and decreasing quantities
+        var quantityInputs = document.querySelectorAll('.quantity-input');
+        var decreaseButtons = document.querySelectorAll('.decrease');
+        var increaseButtons = document.querySelectorAll('.increase');
+
+        // Initialize cart variables
+        var cartItems = [];
+        var totalItems = 0;
+        var totalAmount = 0;
+
+        // Function to handle the logic for increasing quantity
+        function increaseQuantity(input) {
+            var value = parseInt(input.value);
+            input.value = value + 1;
+            updateCart();
+        }
+
+        // Function to handle the logic for decreasing quantity
+        function decreaseQuantity(input) {
+            var value = parseInt(input.value);
+            if (value > 0) {
+                input.value = value - 1;
+                updateCart();
+            }
+        }
+
+        // Function to update the cart
+        function updateCart() {
+            cartItems = [];
+            totalItems = 0;
+            totalAmount = 0;
+
+            // Iterate through each menu item
+            quantityInputs.forEach(function (input, index) {
+                var quantity = parseInt(input.value);
+                if (quantity > 0) {
+                    var itemName = input.parentElement.previousElementSibling.textContent;
+                    var itemPrice = parseInt(input.parentElement.nextElementSibling.textContent.split('Rs ')[1]);
+                    cartItems.push({ name: itemName, quantity: quantity, price: itemPrice });
+                    totalItems += quantity;
+                    totalAmount += quantity * itemPrice;
+                }
+            });
+
+            // Update cart display
+            document.getElementById('cart-items').innerHTML = generateCartItemsHTML();
+            document.getElementById('total-items').textContent = totalItems;
+            document.getElementById('total-amount').textContent = totalAmount;
+        }
+
+        // Function to generate HTML for cart items
+        function generateCartItemsHTML() {
+            var cartItemsHTML = '';
+            cartItems.forEach(function (item) {
+                cartItemsHTML += item.name + ' - Quantity: ' + item.quantity + '<br>';
+            });
+            return cartItemsHTML;
+        }
+
+        // Add event listeners for increasing and decreasing buttons
+        increaseButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var input = this.parentElement.querySelector('.quantity-input');
+                increaseQuantity(input);
+            });
+        });
+
+        decreaseButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var input = this.parentElement.querySelector('.quantity-input');
+                decreaseQuantity(input);
+            });
+        });
+    </script>
+</body>
+
+</html>

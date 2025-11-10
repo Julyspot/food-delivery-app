@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" href="restaurant-menu.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 id="restaurant-name-title">Loading Menu...</h1>
+        <div class="filter-container">
+            <button class="filter-btn active" id="filter-all">Show All</button>
+            <button class="filter-btn" id="filter-veg">Veg Only</button>
+            <button class="filter-btn" id="filter-non-veg">Non-Veg Only</button>
+        </div>
+        <ul id="menu-list">
+        </ul>
+    </div>
+
+    <div class="cart-container">
+        <h2>Cart</h2>
+        <div id="cart-items"></div>
+        <div id="cart-summary">Total items: <span id="total-items">0</span>, Total amount: Rs <span
+                id="total-amount">0</span>/-</div>
+        <a href="checkout.html" id="checkout-btn">Proceed to Checkout</a>
+    </div>
+
+    <script>
+        // --- PART 1: DYNAMIC MENU LOADER ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Get the restaurant ID from the URL (e.g., ?id=1)
+            const params = new URLSearchParams(window.location.search);
+            const restaurantId = parseInt(params.get('id'));
+
+            if (!restaurantId) {
+                document.getElementById('restaurant-name-title').textContent = 'Error: No Restaurant Found';
+                return;
+            }
+
+            // 2. Fetch all restaurants
+            fetch('restaurants.json')
+                .then(response => response.json())
+                .then(restaurants => {
+                    // 3. Find our specific restaurant by its ID
+                    const restaurant = restaurants.find(r => r.id === restaurantId);
+
+                    if (!restaurant) {
+                        document.getElementById('restaurant-name-title').textContent = 'Error: Restaurant Not Found';
+                        return;
+                    }
+
+                    // 4. Update the page title
+                    document.getElementById('restaurant-name-title').textContent = `${restaurant.name}'s Menu`;
+                    document.body.style.backgroundImage = `url('${restaurant.menuBackground}')`;
+                    // 5. Get the <ul> where we will add menu items
+                    const menuList = document.getElementById('menu-list');
+
+                    // 6. Loop through this restaurant's menu and create the HTML for each item
+                    restaurant.menu.forEach(item => {
+                        const li = document.createElement('li');
+                        li.id = 'menu-item';
+
+                        // Store item data directly on the element
+                        li.dataset.id = item.id;
+                        li.dataset.name = item.item;
+                        li.dataset.price = item.price;
+                        li.dataset.type = item.type; // <-- THIS IS THE NEW LINE
+
+                        li.innerHTML = `
+                            <span>${item.item}</span> 
+                            <div class="quantity-buttons">
+                                <button class="quantity-button decrease">-</button>
+                                <input type="number" value="0" min="0" class="quantity-input">
+                                <button class="quantity-button increase">+</button>
+                            </div>
+                            <span class="fixed-cost">Rs ${item.price}/-</span>
+                        `;
+                        menuList.appendChild(li);
+                    });
+
+                    // 7. NOW that the menu is built, initialize the cart logic
+                    initializeCartLogic();
+
+                    // --- NEW ---
+                    // 8. Initialize the new filter logic
+                    initializeFilterLogic();
+                    // --- END NEW ---
+
+                })
+
+                .catch(error => {
+                    console.error('Error loading menu:', error);
+                    document.getElementById('restaurant-name-title').textContent = 'Error loading menu';
+                });
+        });
+
+
+        // --- PART 2: YOUR CART LOGIC ---
+        // This is your cart script, slightly modified to work 
+        // *after* the menu items are created dynamically.
+
+        function initializeCartLogic() {
+            // --- NEW: LOAD THE SAVED CART FOR THE CURRENT USER ---
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            let savedCart = [];
+
+            if (currentUser) {
+                const cartKey = 'cart_' + currentUser.email;
+                savedCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+            }
+
+            // Get all menu items on the page
+            const menuItemsOnPage = document.querySelectorAll('#menu-list li');
+
+            // This loop updates the "0" input boxes to match the saved cart
+            menuItemsOnPage.forEach(menuItem => {
+                const itemName = menuItem.dataset.name;
+                const savedItem = savedCart.find(item => item.name === itemName);
+
+                if (savedItem) {
+                    // Find the quantity input for this item and set its value
+                    menuItem.querySelector('.quantity-input').value = savedItem.quantity;
+                }
+            });
+            // --- END NEW LOAD ---
+
+
+            // Get all buttons and inputs *after* they have been created
+            var quantityInputs = document.querySelectorAll('.quantity-input');
+            var decreaseButtons = document.querySelectorAll('.decrease');
+            var increaseButtons = document.querySelectorAll('.increase');
+
+            // Initialize cart variables
+            var cartItems = [];
+            var totalItems = 0;
+            var totalAmount = 0;
+
+            // Function to handle the logic for increasing quantity
+            function increaseQuantity(input) {
+                var value = parseInt(input.value);
+                input.value = value + 1;
+                updateCart();
+            }
+
+            // Function to handle the logic for decreasing quantity
+            function decreaseQuantity(input) {
+                var value = parseInt(input.value);
+                if (value > 0) {
+                    input.value = value - 1;
+                    updateCart();
+                }
+            }
+
+            // Function to update the cart
+            function updateCart() {
+                // --- NEW: Get the logged-in user ---
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+                cartItems = [];
+                totalItems = 0;
+                totalAmount = 0;
+
+                // Iterate through each menu item
+                quantityInputs.forEach(function (input) {
+                    var quantity = parseInt(input.value);
+                    if (quantity > 0) {
+                        // Get item data from the parent <li> element's 'data-' attributes
+                        var menuItemElement = input.closest('#menu-item');
+                        var itemName = menuItemElement.dataset.name;
+                        var itemPrice = parseInt(menuItemElement.dataset.price);
+
+                        cartItems.push({ name: itemName, quantity: quantity, price: itemPrice });
+                        totalItems += quantity;
+                        totalAmount += quantity * itemPrice;
+                    }
+                });
+
+                // Update cart display
+                document.getElementById('cart-items').innerHTML = generateCartItemsHTML();
+                document.getElementById('total-items').textContent = totalItems;
+                document.getElementById('total-amount').textContent = totalAmount;
+
+                // --- NEW: Save the cart to the specific user ---
+                if (currentUser) {
+                    const cartKey = 'cart_' + currentUser.email;
+                    localStorage.setItem(cartKey, JSON.stringify(cartItems));
+                }
+            }
+
+            // Function to generate HTML for cart items
+            function generateCartItemsHTML() {
+                // This is the header for our new cart table
+                var cartItemsHTML = `
+                    <div class="cart-header">
+                        <div>Item</div>
+                        <div>Qty</div>
+                        <div>Price</div>
+                    </div>
+                `;
+
+                // Now, loop through items and add a "row" for each one
+                cartItems.forEach(function (item) {
+                    cartItemsHTML += `
+                        <div class="cart-row">
+                            <div>${item.name}</div>
+                            <div>${item.quantity}</div>
+                            <div>Rs ${item.price * item.quantity}</div>
+                        </div>
+                    `;
+                });
+
+                return cartItemsHTML;
+            }
+
+            // Add event listeners for increasing and decreasing buttons
+            increaseButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var input = this.parentElement.querySelector('.quantity-input');
+                    increaseQuantity(input);
+                });
+            });
+
+            decreaseButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var input = this.parentElement.querySelector('.quantity-input');
+                    decreaseQuantity(input);
+                });
+            });
+
+            // --- NEW: Update the cart totals one time on page load ---
+            updateCart();
+        }
+
+        // --- PART 3: NEW FILTER LOGIC ---
+        // --- NEW ---
+        // These are the new functions that make the buttons work
+
+        function initializeFilterLogic() {
+            const allBtn = document.getElementById('filter-all');
+            const vegBtn = document.getElementById('filter-veg');
+            const nonVegBtn = document.getElementById('filter-non-veg');
+            const filterButtons = [allBtn, vegBtn, nonVegBtn];
+
+            // Add click event listeners
+            allBtn.addEventListener('click', () => filterMenu('all', allBtn, filterButtons));
+            vegBtn.addEventListener('click', () => filterMenu('veg', vegBtn, filterButtons));
+            nonVegBtn.addEventListener('click', () => filterMenu('non-veg', nonVegBtn, filterButtons));
+        }
+
+        function filterMenu(filterType, selectedButton, allButtons) {
+            // 1. Update active button style
+            allButtons.forEach(btn => btn.classList.remove('active'));
+            selectedButton.classList.add('active');
+
+            // 2. Get all menu items from the list
+            const menuItems = document.querySelectorAll('#menu-list li');
+
+            // 3. Loop through them and show/hide
+            menuItems.forEach(item => {
+                // We use 'grid' because that's our display style from the CSS fix
+                if (filterType === 'all') {
+                    item.style.display = 'grid'; // Show all
+                } else if (item.dataset.type === filterType) {
+                    item.style.display = 'grid'; // Show matching
+                } else {
+                    item.style.display = 'none'; // Hide non-matching
+                }
+            });
+        }
+        // --- END NEW ---
+    </script>
+</body>
+
+</html>

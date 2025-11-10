@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            /* Using one of your existing backgrounds */
+            background: url('home.jpg') no-repeat center center fixed;
+            background-size: cover;
+            /* Center everything on the page */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Set a min-height to handle long forms */
+            min-height: 100vh;
+            /* Add padding for when the form is taller than the screen */
+            padding: 2rem 0;
+            margin: 0;
+        }
+
+        /* The white box that holds the form */
+        .signup-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem 3rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            /* Made it a bit wider for a signup form */
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        /* This div wraps each label and input */
+        .input-group {
+            text-align: left;
+            margin-bottom: 1rem;
+            /* Reduced margin for more fields */
+        }
+
+        /* This is for side-by-side fields */
+        .input-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .input-row .input-group {
+            width: 100%;
+            /* Make them share the space */
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: bold;
+            font-size: 0.9rem;
+            /* Smaller labels for a busy form */
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            /* Important for padding to work right */
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* The Sign Up button */
+        .signup-button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #d9534f;
+            /* Using the red from your app */
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+        }
+
+        .signup-button:hover {
+            background-color: #c9302c;
+        }
+
+        /* The "Login" link at the bottom */
+        .login-link {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .login-link a {
+            color: #d9534f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="signup-container">
+        <h1>Create Account</h1>
+
+        <form id="signup-form">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                </div>
+                <div class="input-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email ID:</label>
+                <input type="text" id="email" name="email_id" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Set Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="input-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <input type="submit" value="Create Account" class="signup-button">
+        </form>
+
+        <div class="login-link">
+            <span>Already have an account?</span>
+            <a href="login.html">Login</a>
+        </div>
+    </div>
+    <script>
+        // Wait for the page to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. Find the form on the page
+            const signupForm = document.getElementById('signup-form');
+
+            // 2. Add an event listener for when the user clicks "submit"
+            signupForm.addEventListener('submit', (event) => {
+
+                // 3. Stop the form from reloading the page (which is the default behavior)
+                event.preventDefault();
+
+                // 4. Get all the values from the form fields
+                const firstName = document.getElementById('first_name').value;
+                const lastName = document.getElementById('last_name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm_password').value;
+
+                // 5. VALIDATE: Check if the passwords match
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match. Please try again.');
+                    return; // Stop the function from running
+                }
+
+                // 6. PREPARE STORAGE: Get the list of existing users from localStorage
+                // We parse the JSON string back into an array, or create a new empty array []
+                let users = JSON.parse(localStorage.getItem('users')) || [];
+
+                // 7. VALIDATE: Check if a user with this email already exists
+                const userExists = users.find(user => user.email === email);
+
+                if (userExists) {
+                    alert('An account with this email already exists. Please log in.');
+                    return; // Stop the function
+                }
+
+                // 8. SAVE USER: If everything is good, create the new user object
+                const newUser = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password
+                    // In a real app, you would HASH this password for security
+                };
+
+                // Add the new user to our array
+                users.push(newUser);
+
+                // Save the UPDATED array back to localStorage as a JSON string
+                localStorage.setItem('users', JSON.stringify(users));
+
+                // 9. REDIRECT: Send the user to the login page
+                alert('Account created successfully! Please log in.');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

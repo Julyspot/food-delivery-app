@@ -1,0 +1,67 @@
+body {
+    background: url('Bread_AI.png');
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+#sel {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px #000;
+}
+
+#restaurant-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.restaurant-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.restaurant-card:hover {
+    transform: scale(1.03);
+}
+
+.restaurant-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.restaurant-card h2 {
+    margin: 15px 0 5px 0;
+    color: #333;
+}
+
+.restaurant-card p {
+    margin: 0 0 15px 0;
+    color: #777;
+    font-style: italic;
+}
+
+.menu-button {
+    display: block;
+    padding: 12px;
+    background-color: #d9534f;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.menu-button:hover {
+    background-color: #c9302c;
+}
